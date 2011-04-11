@@ -88,7 +88,7 @@ class MajaxInstaller {
         /** @var $tag MajaxInstaller_Configuration_Tag */
         if (isset($global_replace[$tag->getHash()]))
         {
-          $replace[$tag->$tag->getHash()] = $global_replace[$tag->getHash()];
+          $replace[$tag->getHash()] = $global_replace[$tag->getHash()];
         } else {
           $replace[$tag->getHash()] = $this->tag_helper->getValue($tag);
         }
