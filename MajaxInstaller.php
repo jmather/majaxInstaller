@@ -77,4 +77,20 @@ class MajaxInstaller {
       file_put_contents($file->getDestination(), $content);
     }
   }
+
+  public static function autoload()
+  {
+    $base_path = dirname(__FILE__);
+    $loader = function($class_name) use ($base_path)
+    {
+      $rel_path = str_replace('_', DIRECTORY_SEPARATOR, $class_name).'.php';
+      $full_path = $base_path.DIRECTORY_SEPARATOR.$rel_path;
+      if (file_exists($full_path))
+      {
+        require_once $full_path;
+      }
+    };
+
+    spl_autoload_register($loader);
+  }
 }
