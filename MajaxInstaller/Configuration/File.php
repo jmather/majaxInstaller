@@ -7,7 +7,7 @@
  * To change this template use File | Settings | File Templates.
  */
  
-class Majax_Installer_Configuration_File {
+class MajaxInstaller_Configuration_File {
   /**
    * @var string
    */
@@ -64,7 +64,7 @@ class Majax_Installer_Configuration_File {
     return $this->tags;
   }
 
-  public function addTag(Majax_Installer_Configuration_File_Tag $tag)
+  public function addTag(MajaxInstaller_Configuration_File_Tag $tag)
   {
     $this->tags[] = $tag;
   }

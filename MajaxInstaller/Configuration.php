@@ -7,7 +7,7 @@
  * To change this template use File | Settings | File Templates.
  */
 
-class Majax_Installer_Configuration
+class MajaxInstaller_Configuration
 {
   private $files;
 
@@ -80,7 +80,7 @@ class Majax_Installer_Configuration
         {
           if ($files_node['name'] == 'File')
           {
-            $f = new Majax_Installer_Configuration_File();
+            $f = new MajaxInstaller_Configuration_File();
             $f->setSource($files_node['attributes']['source']);
             $f->setDestination($files_node['attributes']['destination']);
             foreach($files_node['children'] as $node2)
@@ -91,7 +91,7 @@ class Majax_Installer_Configuration
                 {
                   if ($tags_node['name'] == 'Tag')
                   {
-                    $t = new Majax_Installer_Configuration_File_Tag();
+                    $t = new MajaxInstaller_Configuration_File_Tag();
                     $a = array_merge($tag_defaults, $tags_node['attributes']);
                     $t->setType($a['type']);
                     $t->setHash($a['hash']);

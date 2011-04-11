@@ -7,43 +7,43 @@
  * To change this template use File | Settings | File Templates.
  */
  
-class Majax_Installer {
+class MajaxInstaller {
   /**
-   * @var \Majax_Installer_Configuration
+   * @var \MajaxInstaller_Configuration
    */
   private $configuration;
 
   /**
-   * @var \Majax_Installer_Output
+   * @var \MajaxInstaller_Output
    */
   private $output;
 
   /**
-   * @var \Majax_Installer_Input
+   * @var \MajaxInstaller_Input
    */
   private $input;
 
-  public function __construct(Majax_Installer_Configuration $configuration = null, Majax_Installer_Output $output = null, Majax_Installer_Input $input = null)
+  public function __construct(MajaxInstaller_Configuration $configuration = null, MajaxInstaller_Output $output = null, MajaxInstaller_Input $input = null)
   {
     if ($configuration !== null)
     {
       $this->configuration = $configuration;
     } else {
-      $this->configuration = new Majax_Installer_Configuration();
+      $this->configuration = new MajaxInstaller_Configuration();
     }
 
     if ($output !== null)
     {
       $this->output = $output;
     } else {
-      $this->output = new Majax_Installer_Output();
+      $this->output = new MajaxInstaller_Output();
     }
 
     if ($input !== null)
     {
       $this->input = $input;
     } else {
-      $this->input = new Majax_Installer_Input();
+      $this->input = new MajaxInstaller_Input();
     }
   }
 
@@ -61,13 +61,13 @@ class Majax_Installer {
   {
     foreach ($this->configuration->getFiles() as $file)
     {
-      /** @var $file Majax_Installer_Configuration_File */
+      /** @var $file MajaxInstaller_Configuration_File */
 
       $replace = array();
 
       foreach($file->getTags() as $tag)
       {
-        /** @var $tag Majax_Installer_Configuration_File_Tag */
+        /** @var $tag MajaxInstaller_Configuration_File_Tag */
         $this->output->askAboutTag($tag);
         $replace[$tag->getHash()] = $this->input->getResponseAboutTag($tag);
       }

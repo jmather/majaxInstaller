@@ -7,7 +7,7 @@
  * To change this template use File | Settings | File Templates.
  */
  
-class Majax_Installer_Configuration_Validator {
+class MajaxInstaller_Configuration_Validator {
   public function validate($configuration)
   {
     return true;
