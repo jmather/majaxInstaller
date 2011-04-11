@@ -72,14 +72,22 @@ class MajaxInstaller {
   public function execute()
   {
     $global_replace = array();
-    foreach ($this->configuration->getTags() as $tag)
+    if (count($this->configuration->getTags()) > 0)
     {
-      /** @var $tag MajaxInstaller_Configuration_Tag */
-      $global_replace[$tag->getHash()] = $this->tag_helper->getValue($tag);
+      $this->output->infoBlock('These answers apply to the entire installation');
+
+      foreach ($this->configuration->getTags() as $tag)
+      {
+        /** @var $tag MajaxInstaller_Configuration_Tag */
+        $global_replace[$tag->getHash()] = $this->tag_helper->getValue($tag);
+      }
     }
+
     foreach ($this->configuration->getFiles() as $file)
     {
       /** @var $file MajaxInstaller_Configuration_File */
+
+      $this->output->infoBlock('Processing '.$file->getDestination());
 
       $replace = array();
 

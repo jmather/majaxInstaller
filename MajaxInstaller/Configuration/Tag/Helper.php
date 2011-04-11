@@ -31,6 +31,8 @@ class MajaxInstaller_Configuration_Tag_Helper {
       $value = '';
       $exp = '$value = '.$tag->getDefault().';';
       eval($exp);
+
+      $this->output->line('Setting '.$tag->getHash().' to "'.$value.'" automatically...');
       return $value;
     }
 
