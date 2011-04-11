@@ -10,10 +10,12 @@
 class MajaxInstaller_Configuration
 {
   private $files;
+  private $tags;
 
   public function __construct()
   {
-    $this->configuration = array();
+    $this->files = array();
+    $this->tags = array();
   }
 
   public function loadXMLFile($file)
@@ -74,6 +76,27 @@ class MajaxInstaller_Configuration
     {
       $tag_defaults = $this->getDefaultTagArray();
 
+      if ($node['name'] == 'Tags')
+      {
+        foreach($node['children'] as $tags_node)
+        {
+          if ($tags_node['name'] == 'Tag')
+          {
+            $t = new MajaxInstaller_Configuration_Tag();
+            $a = array_merge($tag_defaults, $tags_node['attributes']);
+            $t->setType($a['type']);
+            $t->setHash($a['hash']);
+            $t->setPrompt($a['prompt']);
+            $t->setDefault($a['default']);
+            if ($a['required'] == 'true')
+              $t->setRequired(true);
+            else
+              $t->setRequired(false);
+            $this->tags[] = $t;
+          }
+        }
+      }
+
       if ($node['name'] == 'Files')
       {
         foreach($node['children'] as $files_node)
@@ -91,7 +114,7 @@ class MajaxInstaller_Configuration
                 {
                   if ($tags_node['name'] == 'Tag')
                   {
-                    $t = new MajaxInstaller_Configuration_File_Tag();
+                    $t = new MajaxInstaller_Configuration_Tag();
                     $a = array_merge($tag_defaults, $tags_node['attributes']);
                     $t->setType($a['type']);
                     $t->setHash($a['hash']);
@@ -116,5 +139,10 @@ class MajaxInstaller_Configuration
   public function getFiles()
   {
     return $this->files;
+  }
+
+  public function getTags()
+  {
+    return $this->tags;
   }
 }

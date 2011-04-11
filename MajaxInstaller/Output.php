@@ -8,18 +8,15 @@
  */
  
 class MajaxInstaller_Output {
-  public function printLine($output)
+  public function line($output, $new_line = true)
   {
-    echo $output."\r\n";
+    echo $output;
+    if ($new_line)
+      echo "\r\n";
   }
 
-  public function askAboutTag(MajaxInstaller_Configuration_File_Tag $tag)
+  public function prompt($output)
   {
-    $default = '';
-    if ($tag->getDefault() != '')
-    {
-      $default = ' (default: '.$tag->getDefault().')';
-    }
-    $this->printLine($tag->getPrompt().$default);
+    $this->line($output.': ', false);
   }
 }

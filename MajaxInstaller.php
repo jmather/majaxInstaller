@@ -23,7 +23,12 @@ class MajaxInstaller {
    */
   private $input;
 
-  public function __construct(MajaxInstaller_Configuration $configuration = null, MajaxInstaller_Output $output = null, MajaxInstaller_Input $input = null)
+  /**
+   * @var \MajaxInstaller_Configuration_Tag_Helper
+   */
+  private $tag_helper;
+
+  public function __construct(MajaxInstaller_Configuration $configuration = null, MajaxInstaller_Output $output = null, MajaxInstaller_Input $input = null, MajaxInstaller_Configuration_Tag_Helper $tag_helper = null)
   {
     if ($configuration !== null)
     {
@@ -45,6 +50,13 @@ class MajaxInstaller {
     } else {
       $this->input = new MajaxInstaller_Input();
     }
+
+    if ($tag_helper !== null)
+    {
+      $this->tag_helper = $tag_helper;
+    } else {
+      $this->tag_helper = new MajaxInstaller_Configuration_Tag_Helper($this->input, $this->output);
+    }
   }
 
   public function loadXML($file)
@@ -59,6 +71,12 @@ class MajaxInstaller {
 
   public function execute()
   {
+    $global_replace = array();
+    foreach ($this->configuration->getTags() as $tag)
+    {
+      /** @var $tag MajaxInstaller_Configuration_Tag */
+      $global_replace[$tag->getHash()] = $this->tag_helper->getValue($tag);
+    }
     foreach ($this->configuration->getFiles() as $file)
     {
       /** @var $file MajaxInstaller_Configuration_File */
@@ -67,9 +85,13 @@ class MajaxInstaller {
 
       foreach($file->getTags() as $tag)
       {
-        /** @var $tag MajaxInstaller_Configuration_File_Tag */
-        $this->output->askAboutTag($tag);
-        $replace[$tag->getHash()] = $this->input->getResponseAboutTag($tag);
+        /** @var $tag MajaxInstaller_Configuration_Tag */
+        if (isset($global_replace[$tag->getHash()]))
+        {
+          $replace[$tag->$tag->getHash()] = $global_replace[$tag->getHash()];
+        } else {
+          $replace[$tag->getHash()] = $this->tag_helper->getValue($tag);
+        }
       }
 
       $content = file_get_contents($file->getSource());

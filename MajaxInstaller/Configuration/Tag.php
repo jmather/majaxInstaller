@@ -7,7 +7,7 @@
  * To change this template use File | Settings | File Templates.
  */
 
-class MajaxInstaller_Configuration_File_Tag {
+class MajaxInstaller_Configuration_Tag {
   /**
    * @var string What type of question is this. True/False, Yes/No, String, etc...
    */
@@ -47,7 +47,8 @@ class MajaxInstaller_Configuration_File_Tag {
     return array(
       'yes/no' => 'Yes/No',
       'true/false' => 'True/False',
-      'string' => 'String'
+      'string' => 'String',
+      'expression' => 'Expression',
     );
   }
 

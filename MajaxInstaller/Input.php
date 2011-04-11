@@ -13,14 +13,4 @@ class MajaxInstaller_Input
   {
     return trim(fgets(STDIN));
   }
-
-  public function getResponseAboutTag(MajaxInstaller_Configuration_File_Tag $tag)
-  {
-    $input = $this->getResponse();
-    if ($input == '')
-    {
-      return $tag->getDefault();
-    }
-    return $input;
-  }
 }

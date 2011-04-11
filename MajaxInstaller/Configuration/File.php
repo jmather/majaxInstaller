@@ -64,7 +64,7 @@ class MajaxInstaller_Configuration_File {
     return $this->tags;
   }
 
-  public function addTag(MajaxInstaller_Configuration_File_Tag $tag)
+  public function addTag(MajaxInstaller_Configuration_Tag $tag)
   {
     $this->tags[] = $tag;
   }
